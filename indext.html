@@ -1,57 +1,265 @@
-import random
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerund or Infinitive Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 16px;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 24px;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-top: 0;
+      color: #333;
+    }
+    .sentence {
+      font-size: 1.15rem;
+      margin: 20px 0;
+      color: #222;
+      font-weight: 500;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #fafafa;
+      cursor: pointer;
+      font-size: 1rem;
+      text-align: left;
+      transition: background 0.2s;
+    }
+    .btn:hover:not(:disabled) {
+      background: #eaeaea;
+    }
+    .btn.correct {
+      background: #d4edda;
+      border-color: #28a745;
+      color: #155724;
+      font-weight: bold;
+    }
+    .btn.incorrect {
+      background: #f8d7da;
+      border-color: #dc3545;
+      color: #721c24;
+      font-weight: bold;
+    }
+    .feedback {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 6px;
+      display: none;
+      font-size: 0.95rem;
+    }
+    .feedback.show {
+      display: block;
+      background: #e9ecef;
+      color: #333;
+    }
+    .next-btn {
+      margin-top: 16px;
+      width: 100%;
+      padding: 12px;
+      background: #0070f3;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      display: none;
+    }
+    .next-btn:hover {
+      background: #0051b3;
+    }
+  </style>
+</head>
+<body>
 
-# Question bank based on the verbs followed by gerunds and infinitives from the chart
-question_bank = [
-    {
-        "sentence": "She avoided ______ about the problem during dinner.",
-        "options": ["A) to speak", "B) speaking", "C) speak"],
-        "answer": "B",
-        "explanation": "'Avoid' is followed by a gerund (-ing form)."  #
-    },
-    {
-        "sentence": "We decided ______ our vacation in July.",
-        "options": ["A) taking", "B) take", "C) to take"],
-        "answer": "C",
-        "explanation": "'Decide' is followed by a full infinitive (to + verb)."  #
-    },
-    {
-        "sentence": "He admitted ______ a mistake on the report.",
-        "options": ["A) making", "B) to make", "C) make"],
-        "answer": "A",
-        "explanation": "'Admit' is followed by a gerund (-ing form)."  #
-    },
-    {
-        "sentence": "They offered ______ us move to the new apartment.",
-        "options": ["A) helping", "B) to help", "C) help"],
-        "answer": "B",
-        "explanation": "'Offer' is followed by an infinitive (to + verb)."  #
-    },
-    {
-        "sentence": "Would you mind ______ the window? It's chilly.",
-        "options": ["A) closing", "B) to close", "C) close"],
-        "answer": "A",
-        "explanation": "'Mind' is followed by a gerund (-ing form)."  #
-    },
-    {
-        "sentence": "I managed ______ all the tasks before the deadline.",
-        "options": ["A) finish", "B) finishing", "C) to finish"],
-        "answer": "C",
-        "explanation": "'Manage' is followed by an infinitive (to + verb)."  #
-    },
-    {
-        "sentence": "She enjoys ______ books in her spare time.",
-        "options": ["A) to read", "B) reading", "C) read"],
-        "answer": "B",
-        "explanation": "'Enjoy' is followed by a gerund (-ing form)."  #
-    },
-    {
-        "sentence": "He refused ______ the terms of the contract.",
-        "options": ["A) accept", "B) accepting", "C) to accept"],
-        "answer": "C",
-        "explanation": "'Refuse' is followed by an infinitive (to + verb)."  #
-    },
-    {
-        "sentence": "The teacher suggested ______ together in study pairs.",
-        "options": ["A) working", "B) to work", "C) work"],
-        "answer": "
-        
+  <div class="card" id="quiz-box">
+    <div style="font-size: 0.85rem; color: #666;" id="progress"></div>
+    <div class="sentence" id="sentence">Loading...</div>
+    <div id="options-container"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="next-btn" id="next-btn" onclick="nextQuestion()">Next Question</button>
+  </div>
+
+  <script>
+    const questionBank = [
+      {
+        sentence: "She avoided ______ about the problem during dinner.",
+        options: ["to speak", "speaking", "speak"],
+        correct: 1,
+        explanation: "'Avoid' is followed by a gerund (-ing form)."
+      },
+      {
+        sentence: "We decided ______ our vacation in July.",
+        options: ["taking", "take", "to take"],
+        correct: 2,
+        explanation: "'Decide' is followed by an infinitive (to + verb)."
+      },
+      {
+        sentence: "He admitted ______ a mistake on the report.",
+        options: ["making", "to make", "make"],
+        correct: 0,
+        explanation: "'Admit' is followed by a gerund (-ing form)."
+      },
+      {
+        sentence: "They offered ______ us move to the new apartment.",
+        options: ["helping", "to help", "help"],
+        correct: 1,
+        explanation: "'Offer' is followed by an infinitive (to + verb)."
+      },
+      {
+        sentence: "Would you mind ______ the window? It's chilly.",
+        options: ["closing", "to close", "close"],
+        correct: 0,
+        explanation: "'Mind' is followed by a gerund (-ing form)."
+      },
+      {
+        sentence: "I managed ______ all the tasks before the deadline.",
+        options: ["finish", "finishing", "to finish"],
+        correct: 2,
+        explanation: "'Manage' is followed by an infinitive (to + verb)."
+      },
+      {
+        sentence: "She enjoys ______ books in her spare time.",
+        options: ["to read", "reading", "read"],
+        correct: 1,
+        explanation: "'Enjoy' is followed by a gerund (-ing form)."
+      },
+      {
+        sentence: "He refused ______ the terms of the contract.",
+        options: ["accept", "accepting", "to accept"],
+        correct: 2,
+        explanation: "'Refuse' is followed by an infinitive (to + verb)."
+      },
+      {
+        sentence: "The teacher suggested ______ together in study pairs.",
+        options: ["working", "to work", "work"],
+        correct: 0,
+        explanation: "'Suggest' is followed by a gerund (-ing form)."
+      },
+      {
+        sentence: "We hope ______ you again very soon.",
+        options: ["seeing", "to see", "see"],
+        correct: 1,
+        explanation: "'Hope' is followed by an infinitive (to + verb)."
+      },
+      {
+        sentence: "I finished ______ my homework an hour ago.",
+        options: ["to do", "doing", "do"],
+        correct: 1,
+        explanation: "'Finish' is followed by a gerund (-ing form)."
+      },
+      {
+        sentence: "They agreed ______ us with the event setup.",
+        options: ["supporting", "support", "to support"],
+        correct: 2,
+        explanation: "'Agree' is followed by an infinitive (to + verb)."
+      },
+      {
+        sentence: "He cannot afford ______ a new laptop right now.",
+        options: ["to buy", "buying", "buy"],
+        correct: 0,
+        explanation: "'Afford' is followed by an infinitive (to + verb)."
+      },
+      {
+        sentence: "Are you considering ______ to another city?",
+        options: ["move", "moving", "to move"],
+        correct: 1,
+        explanation: "'Consider' is followed by a gerund (-ing form)."
+      },
+      {
+        sentence: "Don't hesitate ______ if you have any questions.",
+        options: ["to ask", "asking", "ask"],
+        correct: 0,
+        explanation: "'Hesitate' is followed by an infinitive (to + verb)."
+      }
+    ];
+
+    // Shuffle and pick 10 random questions
+    const selectedQuestions = questionBank
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 10);
+
+    let currentIndex = 0;
+    let score = 0;
+
+    function loadQuestion() {
+      const q = selectedQuestions[currentIndex];
+      document.getElementById("progress").textContent = `Question ${currentIndex + 1} of 10`;
+      document.getElementById("sentence").textContent = q.sentence;
+      
+      const optContainer = document.getElementById("options-container");
+      optContainer.innerHTML = "";
+      
+      const feedback = document.getElementById("feedback");
+      feedback.className = "feedback";
+      feedback.textContent = "";
+
+      document.getElementById("next-btn").style.display = "none";
+
+      q.options.forEach((opt, index) => {
+        const btn = document.createElement("button");
+        btn.className = "btn";
+        btn.textContent = opt;
+        btn.onclick = () => selectOption(index, btn);
+        optContainer.appendChild(btn);
+      });
+    }
+
+    function selectOption(index, chosenBtn) {
+      const q = selectedQuestions[currentIndex];
+      const buttons = document.querySelectorAll(".btn");
+      buttons.forEach(b => b.disabled = true);
+
+      const feedback = document.getElementById("feedback");
+
+      if (index === q.correct) {
+        chosenBtn.classList.add("correct");
+        score++;
+        feedback.innerHTML = `<strong>Correct!</strong> ${q.explanation}`;
+      } else {
+        chosenBtn.classList.add("incorrect");
+        buttons[q.correct].classList.add("correct");
+        feedback.innerHTML = `<strong>Incorrect.</strong> ${q.explanation}`;
+      }
+
+      feedback.classList.add("show");
+      document.getElementById("next-btn").style.display = "block";
+    }
+
+    function nextQuestion() {
+      currentIndex++;
+      if (currentIndex < selectedQuestions.length) {
+        loadQuestion();
+      } else {
+        document.getElementById("quiz-box").innerHTML = `
+          <h2>Quiz Completed!</h2>
+          <p class="sentence">Your final score: <strong>${score} / 10</strong></p>
+          <button class="next-btn" style="display:block" onclick="location.reload()">Try Again</button>
+        `;
+      }
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
