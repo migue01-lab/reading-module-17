@@ -1,0 +1,124 @@
+import random
+
+# Question bank based on the verbs followed by gerunds and infinitives from the chart
+question_bank = [
+    {
+        "sentence": "She avoided ______ about the problem during dinner.",
+        "options": ["A) to speak", "B) speaking", "C) speak"],
+        "answer": "B",
+        "explanation": "'Avoid' is followed by a gerund (-ing form)."
+    },
+    {
+        "sentence": "We decided ______ our vacation in July.",
+        "options": ["A) taking", "B) take", "C) to take"],
+        "answer": "C",
+        "explanation": "'Decide' is followed by a full infinitive (to + verb)."
+    },
+    {
+        "sentence": "He admitted ______ a mistake on the report.",
+        "options": ["A) making", "B) to make", "C) make"],
+        "answer": "A",
+        "explanation": "'Admit' is followed by a gerund (-ing form)."
+    },
+    {
+        "sentence": "They offered ______ us move to the new apartment.",
+        "options": ["A) helping", "B) to help", "C) help"],
+        "answer": "B",
+        "explanation": "'Offer' is followed by an infinitive (to + verb)."
+    },
+    {
+        "sentence": "Would you mind ______ the window? It's chilly.",
+        "options": ["A) closing", "B) to close", "C) close"],
+        "answer": "A",
+        "explanation": "'Mind' is followed by a gerund (-ing form)."
+    },
+    {
+        "sentence": "I managed ______ all the tasks before the deadline.",
+        "options": ["A) finish", "B) finishing", "C) to finish"],
+        "answer": "C",
+        "explanation": "'Manage' is followed by an infinitive (to + verb)."
+    },
+    {
+        "sentence": "She enjoys ______ books in her spare time.",
+        "options": ["A) to read", "B) reading", "C) read"],
+        "answer": "B",
+        "explanation": "'Enjoy' is followed by a gerund (-ing form)."
+    },
+    {
+        "sentence": "He refused ______ the terms of the contract.",
+        "options": ["A) accept", "B) accepting", "C) to accept"],
+        "answer": "C",
+        "explanation": "'Refuse' is followed by an infinitive (to + verb)."
+    },
+    {
+        "sentence": "The teacher suggested ______ together in study pairs.",
+        "options": ["A) working", "B) to work", "C) work"],
+        "answer": "A",
+        "explanation": "'Suggest' is followed by a gerund (-ing form)."
+    },
+    {
+        "sentence": "We hope ______ you again very soon.",
+        "options": ["A) seeing", "B) to see", "C) see"],
+        "answer": "B",
+        "explanation": "'Hope' is followed by an infinitive (to + verb)."
+    },
+    {
+        "sentence": "I finished ______ my homework an hour ago.",
+        "options": ["A) to do", "B) doing", "C) do"],
+        "answer": "B",
+        "explanation": "'Finish' is followed by a gerund (-ing form)."
+    },
+    {
+        "sentence": "They agreed ______ us with the event setup.",
+        "options": ["A) supporting", "B) support", "C) to support"],
+        "answer": "C",
+        "explanation": "'Agree' is followed by an infinitive (to + verb)."
+    },
+    {
+        "sentence": "He cannot afford ______ a new laptop right now.",
+        "options": ["A) to buy", "B) buying", "C) buy"],
+        "answer": "A",
+        "explanation": "'Afford' is followed by an infinitive (to + verb)."
+    },
+    {
+        "sentence": "Are you considering ______ to another city?",
+        "options": ["A) move", "B) moving", "C) to move"],
+        "answer": "B",
+        "explanation": "'Consider' is followed by a gerund (-ing form)."
+    },
+    {
+        "sentence": "Don't hesitate ______ if you have any questions.",
+        "options": ["A) to ask", "B) asking", "C) ask"],
+        "answer": "A",
+        "explanation": "'Hesitate' is followed by an infinitive (to + verb)."
+    }
+]
+
+def run_quiz():
+    # Pick 10 questions at random from the pool
+    selected_questions = random.sample(question_bank, 10)
+    score = 0
+
+    print("=== GERUND OR INFINITIVE QUIZ (10 Questions) ===")
+    print("Type A, B, or C for your answer.\n")
+
+    for index, q in enumerate(selected_questions, start=1):
+        print(f"Question {index}: {q['sentence']}")
+        for opt in q["options"]:
+            print(f"  {opt}")
+
+        user_choice = input("Your answer: ").strip().upper()
+
+        if user_choice == q["answer"]:
+            print("✓ Correct!")
+            score += 1
+        else:
+            print(f"✗ Incorrect. The correct answer is: {q['answer']}")
+        
+        # Display rule explanation after each question
+        print(f"Explanation: {q['explanation']}\n" + "-" * 45)
+
+    print(f"\nActivity Complete! Final Score: {score}/10")
+
+if __name__ == "__main__":
+    run_quiz()
